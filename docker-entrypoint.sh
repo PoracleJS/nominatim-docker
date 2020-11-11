@@ -21,7 +21,7 @@ sudo -u postgres psql postgres -c "DROP DATABASE IF EXISTS nominatim"
 useradd -m -p password1234 nominatim
 
 if [ "$NOMINATIM_MODE" == "IMPORT" ]; then
-	sudo -u nominatim /srv/nominatim/build/utils/setup.php --osm-file $NOMINATIM_DATA_PATH/$NOMINATIM_DATA_LABEL.osm.pbf --all --threads 2
+	sudo -u nominatim /srv/nominatim/build/utils/setup.php --osm-file $NOMINATIM_DATA_PATH/$NOMINATIM_DATA_LABEL.osm.pbf --all --threads $NOMINATIM_IMPORT_THREADS
 fi
 
 # Tail Apache logs
