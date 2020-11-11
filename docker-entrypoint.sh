@@ -19,8 +19,10 @@ sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='nomin
 sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='www-data'" | grep -q 1 || sudo -u postgres createuser -SDR www-data
 sudo -u postgres psql postgres -c "DROP DATABASE IF EXISTS nominatim"
 useradd -m -p password1234 nominatim
-sudo -u nominatim /srv/nominatim/build/utils/setup.php --osm-file $NOMINATIM_DATA_PATH/$NOMINATIM_DATA_LABEL.osm.pbf --all --threads 2
 
+if [ "$NOMINATIM_MODE" == "IMPORT" ]; then
+	sudo -u nominatim /srv/nominatim/build/utils/setup.php --osm-file $NOMINATIM_DATA_PATH/$NOMINATIM_DATA_LABEL.osm.pbf --all --threads 2
+fi
 
 # Tail Apache logs
 tail -f /var/log/apache2/* &
